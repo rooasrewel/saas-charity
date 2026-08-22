@@ -1,0 +1,37 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class Donation extends Model
+{
+    use HasFactory;
+
+    protected $fillable = [
+        'user_id',
+        'project_id',
+        'case_request_id',
+        'amount',
+        'status',
+    ];
+
+    // علاقة التبرع بالمتبرع (المستخدم)
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    // علاقة التبرع بالمشروع (إن كان تبرعاً لمشروع جمعية)
+    public function project()
+    {
+        return $this->belongsTo(Project::class);
+    }
+
+    // علاقة التبرع بحالة محتاج (إن كان تبرعاً مباشراً لحالة)
+    public function caseRequest()
+    {
+        return $this->belongsTo(CaseRequest::class, 'case_request_id');
+    }
+}
